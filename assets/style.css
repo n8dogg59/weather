@@ -6,12 +6,6 @@
     text-align: center;
 }
 
-.btn {
-    background-color: blue;
-}
-
-.card {
-    background-color: blue;
-    color: white;
-    margin: 1%;
+.ulList{
+    display: block;
 }

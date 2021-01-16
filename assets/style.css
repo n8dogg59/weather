@@ -1,0 +1,17 @@
+.header {
+    background-color: #303030;
+    color: #F0F0F0;
+    font-size:48px;
+    padding: 10px;
+    text-align: center;
+}
+
+.btn {
+    background-color: blue;
+}
+
+.card {
+    background-color: blue;
+    color: white;
+    margin: 1%;
+}

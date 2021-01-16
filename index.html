@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    /> 
+    <link rel="stylesheet" href="./assets/style.css" />
+
+    <title>Weather Dashboard</title>
+</head>
+<body>
+    <header>
+        <h1 class="header">Weather Dashboard</h1>
+    </header>
+    <div class="row">
+        <section class="col-3 search">
+            <form id="submitCity">
+                <label class="form-label" for="city">Search for a City:</label>
+                <input name="city" id="city" type="text" autofocus="true" class="form-input" />
+                <button type="submit" class="btn" id="searchButton">
+                    <i class="fa fa-search"></i>
+                </button>
+            </form>  
+            <li class="city-container col" id="listedCity"></li>
+        </section>
+        
+        <section class="col-9">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title align-items-center">
+                        <span id="cityDisplayName">(Please search for a city)</span>
+                        <span id="todayDateDisplay">MM/DD/YYYY</span>
+                        <img id="iconWeather" src="">
+                    </h2>
+                    <p class="card-text">Temperature: <span id="currentTemp">(Please search for a city)</span></p>
+                    <p class="card-text">Humidity: <span id="currentHumidity">(Please search for a city)</span></p>
+                    <p class="card-text">Wind Speed: <span id="currentWind">(Please search for a city)</span></p>
+                    <p class="card-text">UV Index: <span id="currentUv">(Please search for a city)</span></p>
+                </div>
+            </div>
+            <h2 class="card-title"></h2>5-Day Forecast</h2>
+                <div class="row">    
+                    <div class="col card-body">
+                        <h3 class="card-title" id="day1">MM/DD/YYYY</h3>
+                        <img class="weatherPic" id="day1Pic" src="">
+                        <p class="card-text">Temp: <span id="day1Temp"></span></p>
+                        <p class="card-text">Humidity: <span id="day1Humid"></span></p>
+                    </div>
+                    <div class="col card-body">
+                        <h3 class="card-title" id="day2">MM/DD/YYYY</h3>
+                        <img class="weatherPic" id="day2Pic" src="">
+                        <p class="card-text">Temp: <span id="day2Temp"></span></p>
+                        <p class="card-text">Humidity: <span id="day2Humid"></span></p>
+                    </div>
+                    <div class="col card-body">
+                        <h3 class="card-title" id="day3">MM/DD/YYYY</h3>
+                        <img class="weatherPic" id="day3Pic" src="">
+                        <p class="card-text">Temp: <span id="day3Temp"></span></p>
+                        <p class="card-text">Humidity: <span id="day3Humid"></span></p>
+                    </div>
+                    <div class="col card-body">
+                        <h3 class="card-title" id="day4">MM/DD/YYYY</h3>
+                        <img class="weatherPic" id="day4Pic" src="">
+                        <p class="card-text">Temp: <span id="day4Temp"></span></p>
+                        <p class="card-text">Humidity: <span id="day4Humid"></span></p>
+                    </div>
+                    <div class="col card-body">
+                        <h3 class="card-title" id="day5">MM/DD/YYYY</h3>
+                        <img class="weatherPic" id="day5Pic" src="">
+                        <p class="card-text">Temp: <span id="day5Temp"></span></p>
+                        <p class="card-text">Humidity: <span id="day5Humid"></span></p>
+                    </div>
+                </div>  
+            </div>
+        </section>
+    </div>
+
+    <script src="./assets/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+</body>
+</html>

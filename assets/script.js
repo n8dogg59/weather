@@ -56,9 +56,9 @@ var getForecast = function(newCity) {
         .then(function(response) {
             if (response.ok) {
                 console.log(response);
-                console.log(response.list[0].dt);
                 return response.json().then(function (response) {
                     console.log(response);
+                    console.log(response.list[0].dt_txt);
                     for (var i = 1; i < 6; i++) {
                         var today = moment().add(i, 'days').format('L');
                             console.log(today);

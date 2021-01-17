@@ -6,7 +6,7 @@ var listedCityEl = document.querySelector("#listedCity");
 var btnClick = document.querySelector(".list-group-item-action");
 
 var getWeather = function(newCity) {
-    fetch("http://api.openweathermap.org/data/2.5/weather?q=" + newCity + myApiKey)
+    fetch("http://api.openweathermap.org/data/2.5/weather?q=" + newCity + myApiKey + "&units=imperial")
         .then(function(response) {
             if (response.ok) {
                 return response.json().then(function (response) {
@@ -20,9 +20,9 @@ var getWeather = function(newCity) {
                     var iconCodeUrl = response.weather[0].icon;
                     console.log(iconCodeUrl);
                     document.getElementById("iconWeather").src = "http://openweathermap.org/img/wn/" + iconCodeUrl + "@2x.png";
-                    document.getElementById("currentTemp").innerHTML = response.main.temp;
-                    document.getElementById("currentHumidity").innerHTML = response.main.humidity;
-                    document.getElementById("currentWind").innerHTML = response.wind.speed;
+                    document.getElementById("currentTemp").innerHTML = response.main.temp + " degrees";
+                    document.getElementById("currentHumidity").innerHTML = response.main.humidity + "%";
+                    document.getElementById("currentWind").innerHTML = response.wind.speed + " mph";
                     var latitude = response.coord.lat;
                     var longitude = response.coord.lon;
                     console.log(latitude);
@@ -58,7 +58,7 @@ var getForecast = function(newCity) {
                 console.log(response);
                 console.log(response.list[0].dt);
                 return response.json().then(function (response) {
-
+                    console.log(response);
                     for (var i = 1; i < 6; i++) {
                         var today = moment().add(i, 'days').format('L');
                             console.log(today);
@@ -88,7 +88,6 @@ var createCityBtn = function(cityName) {
      newButton.type = "submit";
      newButton.onclick = buttonClicked(cityName);
      console.log(newButton.innerText);
-     //listedCityEl.append(newButton);
      return newButton;
 }    
             

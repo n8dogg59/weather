@@ -20,7 +20,7 @@ var getWeather = function(newCity) {
                     var iconCodeUrl = response.weather[0].icon;
                     console.log(iconCodeUrl);
                     document.getElementById("iconWeather").src = "http://openweathermap.org/img/wn/" + iconCodeUrl + "@2x.png";
-                    document.getElementById("currentTemp").innerHTML = response.main.temp + " degrees";
+                    document.getElementById("currentTemp").innerHTML = response.main.temp + " ºF";
                     document.getElementById("currentHumidity").innerHTML = response.main.humidity + "%";
                     document.getElementById("currentWind").innerHTML = response.wind.speed + " mph";
                     var latitude = response.coord.lat;
@@ -52,22 +52,51 @@ var getWeather = function(newCity) {
 }
 
 var getForecast = function(newCity) {
-    fetch("http://api.openweathermap.org/data/2.5/forecast?q=" + newCity + myApiKey)
+    fetch("http://api.openweathermap.org/data/2.5/forecast?q=" + newCity + myApiKey + "&units=imperial")
         .then(function(response) {
             if (response.ok) {
-                console.log(response);
                 return response.json().then(function (response) {
-                    console.log(response);
-                    console.log(response.list[0].dt_txt);
-                    for (var i = 1; i < 6; i++) {
-                        var today = moment().add(i, 'days').format('L');
-                            console.log(today);
-                            document.getElementById("#day" + i).innerHTML(today);
-                            var iconCodeUrl = response.daily[i].weather[0].icon;
-                            document.getElementById("day" + i + "Pic").src = "http://openweathermap.org/img/wn/" + iconCodeUrl + "@2x.png";
-                            document.getElementById("day" + i + "Temp").innerHTML = response.daily[i].temp.day;
-                            document.getElementById("day" + i + "Humid").innerHTML = response.daily[i].humidity;
-                    }
+                    var forecast = response.list;
+                    var day1Forecast = forecast[5];
+                    var iconCodeUrl1 = forecast[5].weather[0].icon;
+                    var day2Forecast = forecast[13];
+                    var iconCodeUrl2 = forecast[13].weather[0].icon;
+                    var day3Forecast = forecast[21];
+                    var iconCodeUrl3 = forecast[21].weather[0].icon;
+                    var day4Forecast = forecast[29];                    
+                    var iconCodeUrl4 = forecast[29].weather[0].icon;
+                    var day5Forecast = forecast[37];
+                    var iconCodeUrl5 = forecast[37].weather[0].icon;
+                    // day 1 forecast
+                    var day1 = moment().add(1, 'days').format('L');
+                    document.getElementById("day1").innerHTML = day1;
+                    document.getElementById("day1Pic").src = "http://openweathermap.org/img/wn/" + iconCodeUrl1 + "@2x.png";
+                    document.getElementById("day1Temp").innerHTML = day1Forecast.main.temp + " ºF";
+                    document.getElementById("day1Humid").innerHTML = day1Forecast.main.humidity + "%";
+                    // day 2 forecast
+                    var day1 = moment().add(2, 'days').format('L');
+                    document.getElementById("day2").innerHTML = day1;
+                    document.getElementById("day2Pic").src = "http://openweathermap.org/img/wn/" + iconCodeUrl2 + "@2x.png";
+                    document.getElementById("day2Temp").innerHTML = day2Forecast.main.temp + " ºF";
+                    document.getElementById("day2Humid").innerHTML = day2Forecast.main.humidity + "%";
+                    // day 3 forecast
+                    var day1 = moment().add(3, 'days').format('L');
+                    document.getElementById("day3").innerHTML = day1;
+                    document.getElementById("day3Pic").src = "http://openweathermap.org/img/wn/" + iconCodeUrl3 + "@2x.png";
+                    document.getElementById("day3Temp").innerHTML = day3Forecast.main.temp + " ºF";
+                    document.getElementById("day3Humid").innerHTML = day3Forecast.main.humidity + "%";
+                    //day 4 forecast
+                    var day1 = moment().add(4, 'days').format('L');
+                    document.getElementById("day4").innerHTML = day1;
+                    document.getElementById("day4Pic").src = "http://openweathermap.org/img/wn/" + iconCodeUrl4 + "@2x.png";
+                    document.getElementById("day4Temp").innerHTML = day4Forecast.main.temp + " ºF";
+                    document.getElementById("day4Humid").innerHTML = day4Forecast.main.humidity + "%";
+                    // day 5 forecast
+                    var day1 = moment().add(5, 'days').format('L');
+                    document.getElementById("day5").innerHTML = day1;
+                    document.getElementById("day5Pic").src = "http://openweathermap.org/img/wn/" + iconCodeUrl5 + "@2x.png";
+                    document.getElementById("day5Temp").innerHTML = day5Forecast.main.temp + " ºF";
+                    document.getElementById("day5Humid").innerHTML = day5Forecast.main.humidity + "%";
                 })
             } 
         })       
@@ -97,12 +126,6 @@ var addCity = function(event) {
     citiesList = JSON.parse(localStorage.getItem("weatherInfo")) || [];
     console.log(citiesList);
     citiesList.unshift(newCity);
-    // for (var i = 0; i < citiesList.length; i++) {
-    //     if (newCity.toLowerCase() == citiesList[i].toLowerCase()) {
-    //         return;
-    //     }
-    // }
-    citiesList.unshift(newCity);   
     console.log(citiesList);     
     
     console.log(citiesList);

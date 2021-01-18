@@ -6,7 +6,7 @@ var listedCityEl = document.querySelector("#listedCity");
 var btnClick = document.querySelector(".list-group-item-action");
 
 var getWeather = function(newCity) {
-    fetch("http://api.openweathermap.org/data/2.5/weather?q=" + newCity + myApiKey + "&units=imperial")
+    fetch("https://api.openweathermap.org/data/2.5/weather?q=" + newCity + myApiKey + "&units=imperial")
         .then(function(response) {
             if (response.ok) {
                 return response.json().then(function (response) {
@@ -52,7 +52,7 @@ var getWeather = function(newCity) {
 }
 
 var getForecast = function(newCity) {
-    fetch("http://api.openweathermap.org/data/2.5/forecast?q=" + newCity + myApiKey + "&units=imperial")
+    fetch("https://api.openweathermap.org/data/2.5/forecast?q=" + newCity + myApiKey + "&units=imperial")
         .then(function(response) {
             if (response.ok) {
                 return response.json().then(function (response) {

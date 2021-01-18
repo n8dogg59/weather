@@ -16,13 +16,13 @@ Create a website where the user can search for a city's current weather and a 5-
 * CSS
 
 ## Website
-https://n8dogg59.github.io/scheduler/
+https://n8dogg59.github.io/weather/
 
 ## Gitbub Repository
-https://github.com/n8dogg59/scheduler
+https://github.com/n8dogg59/weather
 
 ## Screenshot
-![](./screenshot/screencapture.jpg)
+![](./pics/screenshotWeather.jpg)
 
 ### Contribution
 Created by Nate Schroeder

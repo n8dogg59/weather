@@ -27,7 +27,7 @@ var getWeather = function(newCity) {
                     var longitude = response.coord.lon;
                     console.log(latitude);
                     console.log(longitude);
-                    fetch("http://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + myApiKey)
+                    fetch("https://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + myApiKey)
                         .then(function(response) {
                             return response.json().then(function (response) {
                                 var uvIndex = response.value;

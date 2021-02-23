@@ -4,6 +4,7 @@ var submitCityEl = document.querySelector("#submitCity");
 var myApiKey = "&appid=190c95f54172c125e0f544a8140e5ed4";
 var listedCityEl = document.querySelector("#listedCity");
 var btnClick = document.querySelector(".list-group-item-action");
+var listedCityClass = document.getElementsByClassName("list-group-item-action");
 
 var getWeather = function(newCity) {
     fetch("https://api.openweathermap.org/data/2.5/weather?q=" + newCity + myApiKey + "&units=imperial")
@@ -112,8 +113,6 @@ var newCityButton = function(newCity) {
 var createCityBtn = function(cityName) {
      var newButton = document.createElement("button");
      newButton.textContent = cityName;
-     newButton.addClass = "list-group-item-action";
-     newButton.display = "inline";
      newButton.type = "submit";
      newButton.onclick = buttonClicked(cityName);
      console.log(newButton.innerText);
@@ -124,16 +123,28 @@ var addCity = function(event) {
     event.preventDefault();
     var newCity = cityEl.value.trim();
     citiesList = JSON.parse(localStorage.getItem("weatherInfo")) || [];
+    if (citiesList === null) {  
+        citiesList.unshift(newCity);
+    } else {
+        for (var i = 0; i < citiesList.length; i++) {
+            if (newCity.toLowerCase() === citiesList[i].toLowerCase()) {
+                getWeather(newCity);
+                getForecast(newCity);
+                return;
+            }
+        }
+        citiesList.unshift(newCity);
+    }
     console.log(citiesList);
-    citiesList.unshift(newCity);
-    console.log(citiesList);     
+    // citiesList.unshift(newCity);
+    // console.log(citiesList);     
     
-    console.log(citiesList);
+    // console.log(citiesList);
     localStorage.setItem("weatherInfo", JSON.stringify(citiesList));
     console.log(citiesList);
     getWeather(newCity);
     getForecast(newCity);
-   newCityButton(newCity);
+    newCityButton(newCity);
 };
 
 var buttonClicked = function(newCity) {
@@ -154,4 +165,22 @@ var loadOldCities = function() {
     }
 }
 
+var cityButtonClicked = function (event) {
+    event.preventDefault();
+    var clickedCity = event.target.textContent.trim();
+    getWeather(clickedCity);
+    getForecast(clickedCity);
+}
+
+var storedCities = function () {
+    citiesList = JSON.parse(localStorage.getItem("weatherInfo")) || [];
+    for (var i = 0; i < citiesList.length; i++) {
+        var citySavedBtn = createCityBtn(citiesList[i]);
+        listedCityEl.append(citySavedBtn);
+    }
+}
+
+storedCities();
+
 submitCityEl.addEventListener("submit", addCity);
+// btnClick.addEventListener("submit", cityButtonClicked(event));

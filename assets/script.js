@@ -3,36 +3,29 @@ var cityEl = document.querySelector("#city");
 var submitCityEl = document.querySelector("#submitCity");
 var myApiKey = "&appid=190c95f54172c125e0f544a8140e5ed4";
 var listedCityEl = document.querySelector("#listedCity");
-var btnClick = document.querySelector(".list-group-item-action");
-var listedCityClass = document.getElementsByClassName("list-group-item-action");
+var listedCityClass = document.getElementsByClassName("bg-primary");
 
+// This function gets called after either a new city is entered and the search button with the magnifying class is clicked or if a button is
+// clicked in the list of previous searched cities.  The functions returns the current weather conditions for the city. 
 var getWeather = function(newCity) {
     fetch("https://api.openweathermap.org/data/2.5/weather?q=" + newCity + myApiKey + "&units=imperial")
         .then(function(response) {
             if (response.ok) {
                 return response.json().then(function (response) {
                     document.getElementById("cityDisplayName").innerHTML = response.name;
-                    console.log(response);
-                    console.log(response.name);
                     var today = moment().format('L');
-                    console.log(today);
                     document.getElementById("todayDateDisplay").innerHTML = today;
-                    console.log(response.weather[0].icon);
                     var iconCodeUrl = response.weather[0].icon;
-                    console.log(iconCodeUrl);
                     document.getElementById("iconWeather").src = "http://openweathermap.org/img/wn/" + iconCodeUrl + "@2x.png";
                     document.getElementById("currentTemp").innerHTML = response.main.temp + " ºF";
                     document.getElementById("currentHumidity").innerHTML = response.main.humidity + "%";
                     document.getElementById("currentWind").innerHTML = response.wind.speed + " mph";
                     var latitude = response.coord.lat;
                     var longitude = response.coord.lon;
-                    console.log(latitude);
-                    console.log(longitude);
                     fetch("https://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + myApiKey)
                         .then(function(response) {
                             return response.json().then(function (response) {
                                 var uvIndex = response.value;
-                                console.log(uvIndex);
                                 document.getElementById("currentUv").innerHTML = uvIndex;
                                 if (uvIndex <= 3) {
                                     var currentUvEl = document.getElementById("currentUv");
@@ -52,6 +45,8 @@ var getWeather = function(newCity) {
         })
 }
 
+// This function gets called after either a new city is entered and the search button with the magnifying class is clicked or if a button is
+// clicked in the list of previous searched cities.  The functions returns the 5 day forecast for the city. 
 var getForecast = function(newCity) {
     fetch("https://api.openweathermap.org/data/2.5/forecast?q=" + newCity + myApiKey + "&units=imperial")
         .then(function(response) {
@@ -105,7 +100,6 @@ var getForecast = function(newCity) {
 
 var newCityButton = function(newCity) {
     var currentCities = JSON.parse(localStorage.getItem("weatherInfo"));
-    console.log(currentCities);
     var citySavedBtn = createCityBtn(newCity);
     listedCityEl.prepend(citySavedBtn);
 }
@@ -114,11 +108,14 @@ var createCityBtn = function(cityName) {
      var newButton = document.createElement("button");
      newButton.textContent = cityName;
      newButton.type = "submit";
-     newButton.onclick = buttonClicked(cityName);
-     console.log(newButton.innerText);
+     newButton.classList.add("bg-light", "btn-large", "btn-block", "py-2");
+     newButton.onclick = () => cityButtonClicked(cityName);
      return newButton;
 }    
             
+// This function gets the city the user entered and add that city to the front of the citiesList array.  It also call the getWeather function
+// which will populate the current weather conditions, the getForecast function which will populate the 5 day forecast, and the newCityButton
+// which will create a new button that will be stored in local storage and can be clicked on later to get the city's weather again.
 var addCity = function(event) {
     event.preventDefault();
     var newCity = cityEl.value.trim();
@@ -135,43 +132,21 @@ var addCity = function(event) {
         }
         citiesList.unshift(newCity);
     }
-    console.log(citiesList);
-    // citiesList.unshift(newCity);
-    // console.log(citiesList);     
     
-    // console.log(citiesList);
     localStorage.setItem("weatherInfo", JSON.stringify(citiesList));
-    console.log(citiesList);
     getWeather(newCity);
     getForecast(newCity);
     newCityButton(newCity);
 };
 
-var buttonClicked = function(newCity) {
-    console.log(newCity);
-    getWeather(newCity);
-    getForecast(newCity);
+//  This function is call when one of the buttons is clicked in the list of buttons that show the cities the user has searched before.
+var cityButtonClicked = function (cityName) {
+    getWeather(cityName);
+    getForecast(cityName);
 }
 
-var loadOldCities = function() {
-    citiesList = JSON.parse(localStorage.getItem("weatherInfo"));
-    if (citiesList == null) {
-        citiesList = [];
-    }
-    for (var i = 0; i < citiesList.length; i++) {
-        console.log(citiesList[i]);
-        var newButton = createCityBtn(citiesList[i]);
-        listedCityEl.append(newButton);
-    }
-}
-
-var cityButtonClicked = function (event) {
-    event.preventDefault();
-    var clickedCity = event.target.textContent.trim();
-    getWeather(clickedCity);
-    getForecast(clickedCity);
-}
-
+// This function is called when the page loads and gets the array of stored cities and then calls the function to create a button for each 
+// city in the array.
 var storedCities = function () {
     citiesList = JSON.parse(localStorage.getItem("weatherInfo")) || [];
     for (var i = 0; i < citiesList.length; i++) {
@@ -180,7 +155,8 @@ var storedCities = function () {
     }
 }
 
+// Called on page load
 storedCities();
 
+// Calls the addCity function when the search button is clicked by the user.
 submitCityEl.addEventListener("submit", addCity);
-// btnClick.addEventListener("submit", cityButtonClicked(event));
